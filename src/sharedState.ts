@@ -20,7 +20,7 @@ export function createSharedState<S>(initial: S): StateManager<S>{
             const [state, setState] = useState<S>(mutableState)
             useBus(uniqBus, ({ s }) => {
                 setState(s)
-            })
+            }, [setState])
             return state;
         }
     }
