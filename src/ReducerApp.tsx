@@ -13,6 +13,7 @@ const initial = {
     name: 'Ilya',
     count: 0,
 }
+
 type Action = { type: "inc" } | { type: "dec" } | { type: "setName", name: string }
 
 class NeverError extends Error {
@@ -29,8 +30,8 @@ function reducer(state: Data, action: Action) {
             return { ...state, count: state.count - 1 }
         case "setName":
             return { ...state, name: action.name }
-        // default:
-        //     throw new NeverError(action.type)
+        default:
+            throw new NeverError(action)
     }
 }
 
