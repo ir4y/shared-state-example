@@ -1,7 +1,6 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import './App.css';
 import _ from 'lodash';
-import { StateApp } from './StateApp';
 import { createSharedReducer } from './sharedReducer';
 
 

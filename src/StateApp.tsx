@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import './App.css';
 import { createSharedState } from './sharedState';
 import _ from 'lodash';
