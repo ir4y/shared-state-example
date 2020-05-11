@@ -38,12 +38,6 @@ function reducer(state: Data, action: Action) {
 const sharedReducer = createSharedReducer(reducer, initial)
 
 export function ReducerApp() {
-    const [state, dispatch] = sharedReducer.useSharedReducer();
-    return <div>
-        <button onClick={() => dispatch({ type: "inc" })}>+</button>
-        {state.count}
-        <button onClick={() => dispatch({ type: "dec" })}>-</button>
-    </div>
     return (
         <div className="App">
             <Form1 />
@@ -75,5 +69,6 @@ function Form3() {
     return <div>
         <input value={s.name}
             onChange={(e) => dispatch({ type: "setName", name: e.target.value })} />
+        <button onClick={() => dispatch({ type: "dec" })}>-</button>
     </div>
 }
