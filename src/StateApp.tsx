@@ -14,6 +14,7 @@ const initial: Data = {
 }
 
 const dataManager = createSharedState<Data>(initial)
+const setSharedState = dataManager.setSharedState;
 
 export function StateApp() {
   return (
@@ -27,9 +28,9 @@ export function StateApp() {
 function Form1() {
   const s = dataManager.useSharedState()
   return <div>
-    <button onClick={() => dataManager.setSharedState({ ...s, count: s.count + 1 })}>+</button>
+    <button onClick={() => setSharedState({ ...s, count: s.count + 1 })}>+</button>
     {s.count}
-    <button onClick={() => dataManager.setSharedState({ ...s, count: s.count - 1 })}>-</button>
+    <button onClick={() => setSharedState({ ...s, count: s.count - 1 })}>-</button>
   </div>
 }
 
@@ -45,8 +46,8 @@ function Form3() {
   const s = dataManager.useSharedState()
   return <div>
     <input value={s.name}
-      onChange={(e) => dataManager.setSharedState({ ...s, name: e.target.value })} />
-    <button onClick={() => dataManager.setSharedState({ ...s, count: s.count - 1 })}>-</button>
+      onChange={(e) => setSharedState({ ...s, name: e.target.value })} />
+    <button onClick={() => setSharedState({ ...s, count: s.count - 1 })}>-</button>
   </div>
 }
 
