@@ -4,24 +4,25 @@ import { uuidv4 } from "./utils";
 
 interface StateManager<S> {
     setSharedState: (s: S) => void
-    useSharedState: () => S
+    useSharedState: () => [S, (s: S) => void]
 }
 
 export function createSharedState<S>(initial: S): StateManager<S> {
     const uniqBus = uuidv4();
     let mutableState: S = initial;
+    const setter = (s: S) => {
+        mutableState = s;
+        dispatch({ type: uniqBus, s })
+    }
 
     return {
-        setSharedState: (s: S) => {
-            mutableState = s;
-            dispatch({ type: uniqBus, s })
-        },
+        setSharedState: setter,
         useSharedState: () => {
             const [state, setState] = useState<S>(mutableState)
             useBus(uniqBus, ({ s }) => {
                 setState(s)
             }, [setState])
-            return state;
+            return [state, setter];
         }
     }
 }

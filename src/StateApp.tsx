@@ -4,50 +4,48 @@ import { createSharedState } from './sharedState';
 import _ from 'lodash';
 
 interface Data {
-  name: string
-  count: number
+    name: string
+    count: number
 }
 
 const initial: Data = {
-  name: 'Ilya',
-  count: 0,
+    name: 'Ilya',
+    count: 0,
 }
 
 const dataManager = createSharedState<Data>(initial)
-const setSharedState = dataManager.setSharedState;
 
 export function StateApp() {
-  return (
-    <div className="App">
-      <Form1 />
-      <Form2 />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Form1 />
+            <Form2 />
+        </div>
+    );
 }
 
 function Form1() {
-  const s = dataManager.useSharedState()
-  return <div>
-    <button onClick={() => setSharedState({ ...s, count: s.count + 1 })}>+</button>
-    {s.count}
-    <button onClick={() => setSharedState({ ...s, count: s.count - 1 })}>-</button>
-  </div>
+    const [state, setState] = dataManager.useSharedState()
+    return <div>
+        <button onClick={() => setState({ ...state, count: state.count + 1 })}>+</button>
+        {state.count}
+        <button onClick={() => setState({ ...state, count: state.count - 1 })}>-</button>
+    </div>
 }
 
 function Form2() {
-  const s = dataManager.useSharedState()
-  const l = s.count > 0 ? s.count : 0
-  return <div>
-    {_.range(l).map((i) => (<Form3 key={i} />))}
-  </div>
+    const [{ count }, setState] = dataManager.useSharedState()
+    const l = count > 0 ? count : 0
+    return <div>
+        {_.range(l).map((i) => (<Form3 key={i} />))}
+    </div>
 }
 
 function Form3() {
-  const s = dataManager.useSharedState()
-  return <div>
-    <input value={s.name}
-      onChange={(e) => setSharedState({ ...s, name: e.target.value })} />
-    <button onClick={() => setSharedState({ ...s, count: s.count - 1 })}>-</button>
-  </div>
+    const [state, setState] = dataManager.useSharedState()
+    return <div>
+        <input value={state.name}
+            onChange={(e) => setState({ ...state, name: e.target.value })} />
+        <button onClick={() => setState({ ...state, count: state.count - 1 })}>-</button>
+    </div>
 }
-
